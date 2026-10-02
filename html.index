@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gemini AI Web Page</title>
+</head>
+<body>
+  <h1>Chat with Gemini</h1>
+  <input type="text" id="userInput" placeholder="Ask something...">
+  <button onclick="askGemini()">Send</button>
+  <div id="response"></div>
+
+  <script type="module">
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+    const API_KEY = "YOUR_GEMINI_API_KEY_HERE";
+    const genAI = new GoogleGenerativeAI(API_KEY);
+
+    window.askGemini = async function() {
+      const prompt = document.getElementById("userInput").value;
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const result = await model.generateContent(prompt);
+      document.getElementById("response").innerText = result.response.text();
+    }
+  </script>
+</body>
+</html>
